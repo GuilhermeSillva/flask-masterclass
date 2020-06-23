@@ -16,6 +16,15 @@ class User(db.Model):
 	name = db.Column(db.String(255), nullable=False)
 	email = db.Column(db.String(255), nullable=False, unique=True, index=True)
 	password = db.Column(db.String(255), nullable=False, index=True)
+	profile = db.relationship('Profile', backref='user', uselist=False)
+	def __str__(self):
+		return self.name
+
+class Profile(db.Model):
+	__tablename__ = 'profiles'
+	id = db.Column(db.Integer, primary_key=True)
+	photo = db.Column(db.Unicode(124), nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 	def __str__(self):
 		return self.name
